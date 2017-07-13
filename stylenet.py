@@ -138,22 +138,28 @@ parser.add_argument('--si', help='Path for the style image.')
 args = parser.parse_args()
 
 
-if __name__ == 'main':
+if __name__ == '__main__':
     if args.layer_ids:
         model = vgg16.VGG16()
         pprint(model.get_layer_names(list(range(13))))
     else:
         content_image = helper.load_image(args.ci)
         style_image = helper.load_image(args.si)
-        content_layer_id = 4
+        content_layer_id = [4]
         style_layer_id = list(range(13))
         content_weight = 1.5
         style_weight = 10.0
         denoise_weight = 0.3
         iters = 120
         step_size = 10.0
-        output_image = neural_style_transfer(content_img=content_image, style_img=style_image, content_layer_ids=content_layer_id,
-                              style_layer_ids=style_layer_id, content_weight=content_weight, style_weight=style_weight,
-                              denoise_weight=denoise_weight, iters=iters, step_size=step_size)
+        output_image = neural_style_transfer(content_img=content_image,
+                                             style_img=style_image,
+                                             content_layer_ids=content_layer_id,
+                                             style_layer_ids=style_layer_id,
+                                             content_weight=content_weight,
+                                             style_weight=style_weight,
+                                             denoise_weight=denoise_weight,
+                                             iters=iters,
+                                             step_size=step_size)
 
         helper.save_image(output_image, 'output.png')
